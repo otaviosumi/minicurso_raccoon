@@ -1,3 +1,6 @@
+#https://education.github.com/pack
+#https://github.com/otaviosumi/minicurso_raccoon
+
 import mongoengine as me
 
 database_name = 'test'
