@@ -9,6 +9,13 @@ class User(me.Document):
 	name = me.StringField()
 	email = me.StringField()
 
+	def to_dict(self):
+		return {
+				'id' : str(self.id),
+				'name' : self.name,
+				'email' : self.email,
+				}
+
 class Task(me.Document):
 	description = me.StringField()
 	desdline = me.DateTimeField()
@@ -32,22 +39,21 @@ def get_users():
 	users = User.objects.all()
 	array = []
 	for user in users:
-		array.append({
-			'id' : str(user.id),
-			'name' : user.name,
-			'email' : user.email
-			})
+		array.append(user.to_dict()) #recebe ele mesmo
 	return jsonify(array)
 
-"""
+
 @app.route("/users", methods = ['POST'])
-def post_users():
-	nome = #input de nome
-	iemail = #input de email
-	user = User(name = nome, email = iemail)
+def create_user():
+	if not request.is_json:
+		return jsonify({'error' : 'nor_json'}), 400
+	data = request.get_json()
+	name = data.get('name')
+	email = data.get('email')
+	user = User(name=name, email=email)
 	user.save()
-	return 
-"""
+	return jsonify(user.to_dict())
+
 
 if __name__ == "__main__":
-	app.run()
+	app.run(debug=True)
