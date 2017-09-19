@@ -8,6 +8,7 @@ class Car(me.Document):
 	model = me.StringField()
 	color = me.StringField()
 	year = me.IntField()
+
 #insere
 my_car = Car(
 	id = 1,
