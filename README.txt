@@ -1,5 +1,6 @@
 Para ativar:
 $ source env/bin/activate
 
-Para desativar
+Para desativar:
 $ deactivate
+
