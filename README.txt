@@ -14,4 +14,3 @@ $ deactivate
 import requests
 data = {'name': 'lalala', 'email': 'lala@lala.com'}
 req = request.post('http://localhost:5000/users', json=data)
-
