@@ -2,8 +2,10 @@
 #https://github.com/otaviosumi/minicurso_raccoon
 
 from flask import Flask, request, jsonify
+from datetime import datetime
 import mongoengine as me
 import json
+
 
 
 #Classes######################################################
@@ -42,14 +44,14 @@ class Task(me.Document):
 		}
 
 
-
 #main########################################################
 #instancia flask
 app = Flask(__name__)
 #inicia banco de dados
 me.connect('todo_app')
 
-#GET user
+#User########################################################
+#GET 
 @app.route("/users", methods = ['GET'])
 def get_users():
 	users = User.objects.all()
@@ -58,7 +60,7 @@ def get_users():
 		array.append(user.to_dict()) #recebe ele mesmo
 	return jsonify(array)
 
-#POST user
+#POST 
 @app.route("/users", methods = ['POST'])
 def create_user():
 	if not request.is_json:
@@ -70,7 +72,8 @@ def create_user():
 	user.save()
 	return jsonify(user.to_dict())
 
-#GET task
+#Task########################################################
+#GET 
 @app.route("/tasks", methods = ['GET'])
 def get_tasks():
 	tasks = Task.objects.all()
@@ -79,20 +82,18 @@ def get_tasks():
 		array.append(task.to_dict()) #recebe ele mesmo
 	return jsonify(array)
 
-#POST task
+#POST 
 @app.route("/tasks", methods = ['POST'])
 def create_task():
 	if not request.is_json:
 		return jsonify({'error' : 'nor_json'}), 400
 	data = request.get_json()
-	task = Task()
+	task = Task(finished=False, added=datetime.now())
 	task.description = data.get('description')
-	task.deadline = datetime.fromtimestamp(data.get('deadline'))
-	task.added = datetime.now()
+	task.deadline = datetime.fromtimestamp(data.get('deadline', 0))
 	task.title = data.get('title')
-	task.finished = data.get('finished')
 	task.tags = data.get('tags', [])
-	task.user = data.get('user')
+	task.user = User.objects.filter(id=data.get('user').first())
 	task.color = data.get('color')
 	task.save()
 	return jsonify(task.to_dict())
