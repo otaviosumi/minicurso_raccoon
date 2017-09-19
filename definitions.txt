@@ -1,0 +1,10 @@
+/users - POST, GET
+ - POST - add colec
+ - GET	- pega colec
+/users/<id> - GET, PATCH, DELETE
+ - GET	- pega dado de usuario
+ - PATCH - atualiza dado de usuario
+ - DELETE - remove usuario
+
+ /tasks - POST, GET
+ /tasks/<id> - POST, GET
