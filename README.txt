@@ -6,8 +6,7 @@ Para verificar instalados:
 $ pip freeze
 
 Para instalar:
-$ pip install mongoengine
-$ pip install flask
+$ pip install flask mongoengine
 
 Para desativar:
 $ deactivate
