@@ -1,0 +1,15 @@
+[Unit]
+Description=uWSGI Emperor
+After=syslog.target
+
+[Service]
+ExecStart=/root/senc_todo_app/api/env/bin/uwsgi --ini /root/senc_todo_app/api/uwsgi.ini --lazy-apps
+RuntimeDirectory=/root/senc_todo_app/api
+Restart=always
+KillSignal=SIGQUIT
+Type=notify
+StandardError=syslog
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target
